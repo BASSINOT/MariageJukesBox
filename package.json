@@ -1,0 +1,14 @@
+{
+    "name" : "MariageJukeBox",
+    "main" : "src/index.html",
+    "window" : {
+        "title" : "Mariage JukeBox V1.0",
+        "icon" : "link.png",
+        "toolbar" : true,
+        "navbar" : true,
+        "frame" : true,
+        "width" : 800,
+        "height" : 600,
+        "position" : "mouse"
+    }
+}

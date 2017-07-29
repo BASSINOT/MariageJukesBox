@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Mariage JukeBox V1.0</title>
+        <script type="text/javascript" src="js/jq.js"></script>
+        <link href="css/style.css" rel="stylesheet"/>
+    </head>
+    <body>
+       <a class="link"></a>
+        <section class="container">
+        </section>
+        <script type="text/javascript">
+            var stylesLevels = {
+                "Reggae" : {
+                    "postion" : 1,
+                    "count" : 0
+                },
+                "Rap – Hip hop" : {
+                    "postion" : 2,
+                    "count" : 0
+                },
+                "Disco" : {
+                    "postion" : 3,
+                    "count" : 0
+                },
+                "Dance – Hous - Electro" : {
+                    "postion" : 4,
+                    "count" : 0
+                },
+                "Rock’n’roll" : {
+                    "postion" : 5,
+                    "count" : 0
+                },
+                "Rock Métal Punk" : {
+                    "postion" : 6,
+                    "count" : 0
+                },
+                "Salsa – Reggaeton" : {
+                    "postion" : 7,
+                    "count" : 0
+                },
+                "R’n’B" : {
+                    "postion" : 8,
+                    "count" : 0
+                },
+                "Zouk" : {
+                    "postion" : 9,
+                    "count" : 0
+                },
+                "Slow" : {
+                    "postion" : 10,
+                    "count" : 0
+                }
+            };
+            $(document).ready(function(){
+                function orderItems(){
+                    $(".container").html('');
+                    var count = (Object.keys(stylesLevels).length);
+                    var $mini = 0;
+                    var $maxi = 0;
+                    var counptor = 1;
+                    $.each(stylesLevels,function(n,e){
+                        if(e.count>$maxi){
+                            $maxi=e.count
+                        }
+                    });
+                    for(k=$maxi;k>=0;k--){
+                        $.each(stylesLevels,function(n,e){
+                            if(e.count==k){
+                                $(".container").append('<div class="songType"><h1>'+n+'</h1></div>')
+                            }
+                        });
+                    }
+                    $('.songType').each(function(m,f){
+                        $.each(stylesLevels,function(n,e){
+                            if(n==$(f).find('h1').html()){
+                                e.postion = counptor;
+                                counptor++;
+                            }
+                        });
+                        console.log(stylesLevels);
+                    });
+                    
+                    saveSettings(stylesLevels,function(){
+                        console.log('datasaved');
+                    })
+                    
+                    $('.songType').click(function(e){
+                        e.preventDefault();
+                        name = $(this).find('h1').html();
+                        $.each(stylesLevels,function(n,e){
+                            if(name==n){
+                                e.count ++;
+                            }
+                        });
+                        //console.log(stylesLevels);
+                         orderItems();
+                    });
+                    
+                    
+                }
+                
+                $('.link').click(function(e){
+                    e.preventDefault();
+                    stylesLevels = {
+                        "Reggae" : {
+                            "postion" : 1,
+                            "count" : 0
+                        },
+                        "Rap – Hip hop" : {
+                            "postion" : 2,
+                            "count" : 0
+                        },
+                        "Disco" : {
+                            "postion" : 3,
+                            "count" : 0
+                        },
+                        "Dance – Hous - Electro" : {
+                            "postion" : 4,
+                            "count" : 0
+                        },
+                        "Rock’n’roll" : {
+                            "postion" : 5,
+                            "count" : 0
+                        },
+                        "Rock Métal Punk" : {
+                            "postion" : 6,
+                            "count" : 0
+                        },
+                        "Salsa – Reggaeton" : {
+                            "postion" : 7,
+                            "count" : 0
+                        },
+                        "R’n’B" : {
+                            "postion" : 8,
+                            "count" : 0
+                        },
+                        "Zouk" : {
+                            "postion" : 9,
+                            "count" : 0
+                        },
+                        "Slow" : {
+                            "postion" : 10,
+                            "count" : 0
+                        }
+                    };
+                    orderItems();
+                })
+
+                //sauvegarder le tableau
+                var nw = require('nw.gui');
+                var fs = require('fs');
+                var path = require('path');
+                function saveSettings(settings,callback){
+                    var file = "fileName.json";
+                    var filePath = path.join(nw.App.dataPath, file);
+                    strigifiedSettings = JSON.stringify(settings);
+                    fs.writeFile(filePath, strigifiedSettings, function(error){
+                        if(error){
+                            alert('impossible de sauvegarder !');
+                        }else if(callback){
+                            callback();
+                        }
+                    });
+                }
+                
+                function loadFiles(){
+                    var file = "fileName.json";
+                    var filePath = path.join(nw.App.dataPath, file);
+                    if(fs.existsSync(filePath)){
+                        chaine = fs.readFileSync(filePath,'UTF-8');
+                        stylesLevels = JSON.parse(chaine);
+                    }else{
+                        stylesLevels = {
+                            "Reggae" : {
+                                "postion" : 1,
+                                "count" : 0
+                            },
+                            "Rap – Hip hop" : {
+                                "postion" : 2,
+                                "count" : 0
+                            },
+                            "Disco" : {
+                                "postion" : 3,
+                                "count" : 0
+                            },
+                            "Dance – Hous - Electro" : {
+                                "postion" : 4,
+                                "count" : 0
+                            },
+                            "Rock’n’roll" : {
+                                "postion" : 5,
+                                "count" : 0
+                            },
+                            "Rock Métal Punk" : {
+                                "postion" : 6,
+                                "count" : 0
+                            },
+                            "Salsa – Reggaeton" : {
+                                "postion" : 7,
+                                "count" : 0
+                            },
+                            "R’n’B" : {
+                                "postion" : 8,
+                                "count" : 0
+                            },
+                            "Zouk" : {
+                                "postion" : 9,
+                                "count" : 0
+                            },
+                            "Slow" : {
+                                "postion" : 10,
+                                "count" : 0
+                            }
+                        };
+                    }
+                    orderItems();
+                }
+                loadFiles();
+                orderItems();
+            });
+            
+        </script>
+    </body>
+</html>
